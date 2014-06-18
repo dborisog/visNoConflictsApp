@@ -1,7 +1,7 @@
 library(shiny)
 
 # preprocess data for the app
-source('script.R')
+source('df_list.R')
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {

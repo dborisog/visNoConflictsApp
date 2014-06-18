@@ -2,15 +2,18 @@
 # This dataset encompasses wars in the middle category - wars that 
 # take place between a state(s) and a nonstate entity outside the 
 # borders of the state, or extra-state wars.
-df.ES <- read.csv(file='https://github.com/dborisog/visNoConflictsApp/raw/master/data/Extra-StateWarData_v4.0.csv',header=TRUE, sep=',')
+urlfile <- 'https://github.com/dborisog/visNoConflictsApp/raw/master/data/Extra-StateWarData_v4.0.csv'
+df.ES <- read.csv(file=url(urlfile),header=TRUE, sep=',')
 
 # This dataset encompasses wars that take place between or 
 # among the recognized states, or interstate wars.
-df.IrS <- read.csv(file='https://github.com/dborisog/visNoConflictsApp/raw/master/data/Inter-StateWarData_v4.0.csv',header=TRUE, sep=',')
+urlfile <- 'https://github.com/dborisog/visNoConflictsApp/raw/master/data/Inter-StateWarData_v4.0.csv'
+df.IrS <- read.csv(file=url(urlfile),header=TRUE, sep=',')
 
 # This dataset encompasses wars that predominantly take place within 
 # the recognized territory of a state, or intra-state wars.
-df.IaS <- read.csv(file='https://github.com/dborisog/visNoConflictsApp/raw/master/data/Intra-StateWarData_v4.1.csv',header=TRUE, sep=',')
+urlfile <- 'https://github.com/dborisog/visNoConflictsApp/raw/master/data/Intra-StateWarData_v4.1.csv'
+df.IaS <- read.csv(file=url(urlfile),header=TRUE, sep=',')
 
 # wars between or among non-state entities, such entities include
 # governments of other types of geopolitical units (GPUs), such as
@@ -18,7 +21,8 @@ df.IaS <- read.csv(file='https://github.com/dborisog/visNoConflictsApp/raw/maste
 # the criteria of system membership. They also might involve 
 # nonterritorial entities (NTEs) or non-state armed groups (NSAs) 
 # that have no defined territorial base.
-df.NS <- read.csv(file='https://github.com/dborisog/visNoConflictsApp/raw/master/data/Non-StateWarData_v4.0.csv',header=TRUE, sep=',')
+urlfile <- 'https://github.com/dborisog/visNoConflictsApp/raw/master/data/Non-StateWarData_v4.0.csv'
+df.NS <- read.csv(file=url(urlfile),header=TRUE, sep=',')
 
 
 # for each row with EndYear2 != -8 change EndYear1 to EndYear2
