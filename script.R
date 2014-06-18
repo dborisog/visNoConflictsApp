@@ -1,17 +1,16 @@
-# setwd("C:\\Users\\user\\gitrep\\DDP_conflicts")
 
 # This dataset encompasses wars in the middle category - wars that 
 # take place between a state(s) and a nonstate entity outside the 
 # borders of the state, or extra-state wars.
-df.ES <- read.csv(file='.\\Data\\Extra-StateWarData_v4.0.csv',header=TRUE, sep=',')
+df.ES <- read.csv(file='https://github.com/dborisog/visNoConflictsApp/raw/master/data/Extra-StateWarData_v4.0.csv',header=TRUE, sep=',')
 
 # This dataset encompasses wars that take place between or 
 # among the recognized states, or interstate wars.
-df.IrS <- read.csv(file='.\\Data\\Inter-StateWarData_v4.0.csv',header=TRUE, sep=',')
+df.IrS <- read.csv(file='https://github.com/dborisog/visNoConflictsApp/raw/master/data/Inter-StateWarData_v4.0.csv',header=TRUE, sep=',')
 
 # This dataset encompasses wars that predominantly take place within 
 # the recognized territory of a state, or intra-state wars.
-df.IaS <- read.csv(file='.\\Data\\Intra-StateWarData_v4.1.csv',header=TRUE, sep=',')
+df.IaS <- read.csv(file='https://github.com/dborisog/visNoConflictsApp/raw/master/data/Intra-StateWarData_v4.1.csv',header=TRUE, sep=',')
 
 # wars between or among non-state entities, such entities include
 # governments of other types of geopolitical units (GPUs), such as
@@ -19,7 +18,7 @@ df.IaS <- read.csv(file='.\\Data\\Intra-StateWarData_v4.1.csv',header=TRUE, sep=
 # the criteria of system membership. They also might involve 
 # nonterritorial entities (NTEs) or non-state armed groups (NSAs) 
 # that have no defined territorial base.
-df.NS <- read.csv(file='.\\Data\\Non-StateWarData_v4.0.csv',header=TRUE, sep=',')
+df.NS <- read.csv(file='https://github.com/dborisog/visNoConflictsApp/raw/master/data/Non-StateWarData_v4.0.csv',header=TRUE, sep=',')
 
 
 # for each row with EndYear2 != -8 change EndYear1 to EndYear2
@@ -31,7 +30,7 @@ df.ns <- df.NS[,c(1,2,3,4,12,15)]
 df.irs[which(df.irs$EndYear2 != -8),6] <- df.IrS[which(df.IrS$EndYear2 != -8),18]
 df.es[which(df.es$EndYear2 != -8),6] <- df.ES[which(df.ES$EndYear2 != -8),19]
 df.ias[which(df.ias$EndYear2 != -8),6] <- df.IaS[which(df.IaS$EndYear2 != -8),20]
-remove(df.IrS,df.ES,df.IaS,df.NS)
+remove(df.IrS,df.ES,df.IaS,df.NS) 
 
 
 # drop Year2 columns
@@ -59,13 +58,13 @@ df.unq <- data.frame()
 for (i in unique(df.all$WarNum)) {
   df.tmp <- df.all[which(df.all$WarNum == i),]
   df.sngl <- data.frame(
-                      WarNum = df.tmp[1,1],
-                      WarName = df.tmp[1,2],
-                      WarType = df.tmp[1,3],
-                      WhereFought = df.tmp[1,4],
-                      StartYear = min(df.tmp$StartYear),
-                      EndYear = max(df.tmp$EndYear)
-            )
+    WarNum = df.tmp[1,1],
+    WarName = df.tmp[1,2],
+    WarType = df.tmp[1,3],
+    WhereFought = df.tmp[1,4],
+    StartYear = min(df.tmp$StartYear),
+    EndYear = max(df.tmp$EndYear)
+  )
   df.unq <- rbind(df.unq,df.sngl)
 }
 
@@ -124,28 +123,22 @@ df.lcn[which(df.lcn$WhereFought ==19),c('Europe','Africa','Middle East','Asia','
 
 df.list <- data.frame(Year = numeric(),Region=character())
 for (num in 1:length(df.lcn$WarNum)) {
-    for (ayear in df.lcn[num,'StartYear']:df.lcn[num,'EndYear']) {
-        for (reg in c('West Hemisphere','Europe','Africa','Middle East','Asia','Oceania')) {
-            if(df.lcn[num,reg] != 0) {
-                df.list <- rbind(df.list,data.frame(Year=ayear,Region=reg))
-            }
-        }
-    }  
+  for (ayear in df.lcn[num,'StartYear']:df.lcn[num,'EndYear']) {
+    for (reg in c('West Hemisphere','Europe','Africa','Middle East','Asia','Oceania')) {
+      if(df.lcn[num,reg] != 0) {
+        df.list <- rbind(df.list,data.frame(Year=ayear,Region=reg))
+      }
+    }
+  }  
 }
-
 
 # density with multiplier
 myhist <- list()
-multiplier <- list()
+multiplier  <- list()
 mydensity  <- list()
 for (reg in c('West Hemisphere','Europe','Africa','Middle East','Asia','Oceania')) {
-    myhist[[reg]] <- hist(df.list[which(df.list$Region==reg),'Year'])
-    multiplier[[reg]] <- myhist[[reg]]$counts / myhist[[reg]]$density
-    mydensity[[reg]] <- density(df.list[which(df.list$Region==reg),'Year'])
-    mydensity[[reg]]$y <- mydensity[[reg]]$y * multiplier[[reg]][1]
+  myhist[[reg]] <- hist(df.list[which(df.list$Region==reg),'Year'])
+  multiplier[[reg]] <- myhist[[reg]]$counts / myhist[[reg]]$density
+  mydensity[[reg]] <- density(df.list[which(df.list$Region==reg),'Year'])
+  mydensity[[reg]]$y <- mydensity[[reg]]$y * multiplier[[reg]][1]
 }
-
-
-library('shiny')
-# setwd('C:\\Users\\user\\gitrep\\DDP_conflicts\\RCode\\visNoConflictsApp')
-runApp()
