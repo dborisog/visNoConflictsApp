@@ -358,7 +358,7 @@ myhist <- list()
 multiplier  <- list()
 mydensity  <- list()
 for (reg in c('West Hemisphere','Europe','Africa','Middle East','Asia','Oceania')) {
-  myhist[[reg]] <- hist(df.list[which(df.list$Region==reg),'Year'])
+  myhist[[reg]] <- hist(df.list[which(df.list$Region==reg),'Year'], plot=FALSE)
   multiplier[[reg]] <- myhist[[reg]]$counts / myhist[[reg]]$density
   mydensity[[reg]] <- density(df.list[which(df.list$Region==reg),'Year'])
   mydensity[[reg]]$y <- mydensity[[reg]]$y * multiplier[[reg]][1]
